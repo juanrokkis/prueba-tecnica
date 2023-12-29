@@ -1,0 +1,21 @@
+FROM python:3.9-slim
+
+RUN apt-get update \
+    && apt-get install -y libpq-dev gcc
+
+WORKDIR /app
+
+COPY ./app /app
+COPY ./requirements.txt /app
+
+RUN pip install -r requirements.txt
+
+ENV DATABASE_HOST=localhost
+ENV DATABASE_PORT=5434
+ENV DATABASE_NAME=audit
+ENV DATABASE_USER=postgres
+ENV DATABASE_PASSWORD=postgres
+ENV TULLAVE_BASE_URL=https://osgqhdx2wf.execute-api.us-west-2.amazonaws.com/card/getBalance/
+ENV TULLAVE_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJtYWFzIiwiaXNzIjoicmJzYXMuY28iLCJjb21wYW55IjoiMTAwMiIsImV4cCI6MTcwNDUxNzIwMCwidXNlciI6Imp1YW4ucXVlc2FkYSIsImlhdCI6MTcwMzg1Nzc1MywiR3J1cG9zIjoiW1wiVW5pdmVyc2FsUmVjaGFyZ2VyXCJdIn0.cGioMeL7yd8Rr8Kea1q3eWZ7SJmEqRBRQxGSE3g2z-1oax44aZqTdYSgLf7T1FjQp-7TJ21_mPUuYeS-3fBgODVzquo0otBlHMsDft9pthRDT7gFhzg36ZPZhrz1vpLYA2usz8xK2tusD4iMHXop-8eZcohOAMK7kg2UapEIu0Sg2m93psWQ3fTuw2Zx2i6NviFYe_jVE_sBQN30UrAxY9O0CRkS4mLlzg4hlMK4w_x4Qiw4Bx7ivaynUofYa3hDUusLzIbLayyCB16JHdgjesShm66XLBII7SIUI-xeb4RBdGaJnRGZBhZP8luQYkQpByJvtpQzVAQ62Dm4RVFffg
+
+CMD ["python", "main.py"]
